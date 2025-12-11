@@ -19,6 +19,7 @@ export const EnvSchema = z.object({
   
   // External APIs
   TMDB_API_KEY: z.string().optional(), // Optional - only needed for movie tools
+  HOMEBUYME_API_KEY: z.string().optional(), // Optional - Homebuyme property API key
   
   // LLM Provider API Keys (at least one required)
   // Models are fixed: GPT-5, Claude Sonnet 4.5, Gemini 2.5 Flash
@@ -121,6 +122,16 @@ export const WIDGET_CONFIG = {
     widgetDescription:
       'Displays color swatches with HEX, RGB, and HSL values, with copy-to-clipboard functionality.',
   },
+  property: {
+    uri: 'ui://widget/property-display',
+    name: 'Property Display Widget',
+    description: 'Interactive Homebuyme property listing widget',
+    mimeType: 'text/html+skybridge',
+    rootElementId: 'property-widget-root',
+    componentFilename: 'property-component.js',
+    widgetDescription:
+      'Displays Homebuyme property listings with images, pricing, savings calculations, and neighborhood information.',
+  },
 } as const;
 
 // ============================================================================
@@ -155,6 +166,12 @@ export const TOOL_NAMES = {
   CONVERT_COLOR: 'convert_color',
   SAVE_FAVORITE_COLOR: 'save_favorite_color',
   GET_FAVORITES: 'get_favorites',
+  // Property tools
+  SEARCH_PROPERTIES: 'search_properties',
+  CALCULATE_SAVINGS: 'calculate_savings',
+  GET_PROPERTY_DETAILS: 'get_property_details',
+  SAVE_FAVORITE_PROPERTY: 'save_favorite_property',
+  GET_FAVORITE_PROPERTIES: 'get_favorite_properties',
 } as const;
 
 // Type-safe tool names

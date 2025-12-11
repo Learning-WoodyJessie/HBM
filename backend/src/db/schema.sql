@@ -74,6 +74,26 @@ CREATE TABLE IF NOT EXISTS favorite_colors (
   UNIQUE(user_id, hex)
 );
 
+-- User-specific favorite properties
+-- Stores Homebuyme properties users have saved to favorites
+CREATE TABLE IF NOT EXISTS favorite_properties (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  property_id TEXT NOT NULL,
+  address TEXT NOT NULL,
+  city TEXT NOT NULL,
+  state TEXT NOT NULL,
+  price DECIMAL NOT NULL,
+  hbm_price DECIMAL NOT NULL,
+  property_type TEXT NOT NULL,
+  status TEXT NOT NULL,
+  image_url TEXT,
+  notes TEXT,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW(),
+  UNIQUE(user_id, property_id)
+);
+
 -- Indexes for performance optimization
 CREATE INDEX IF NOT EXISTS idx_watchlist_user ON watchlist(user_id);
 CREATE INDEX IF NOT EXISTS idx_watchlist_movie ON watchlist(movie_id);
@@ -84,6 +104,9 @@ CREATE INDEX IF NOT EXISTS idx_preferences_user ON preferences(user_id);
 CREATE INDEX IF NOT EXISTS idx_users_api_key ON users(api_key);
 CREATE INDEX IF NOT EXISTS idx_favorite_colors_user ON favorite_colors(user_id);
 CREATE INDEX IF NOT EXISTS idx_favorite_colors_hex ON favorite_colors(hex);
+CREATE INDEX IF NOT EXISTS idx_favorite_properties_user ON favorite_properties(user_id);
+CREATE INDEX IF NOT EXISTS idx_favorite_properties_property ON favorite_properties(property_id);
+CREATE INDEX IF NOT EXISTS idx_favorite_properties_state ON favorite_properties(state);
 
 -- Insert a default demo user for testing
 -- In production, users should be created through a proper registration flow

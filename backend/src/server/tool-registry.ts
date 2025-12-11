@@ -56,6 +56,18 @@ import {
   getFavorites,
   getFavoritesToolDefinition,
 } from '../tools/colors.js';
+import {
+  searchProperties,
+  searchPropertiesToolDefinition,
+  calculatePropertySavings,
+  calculateSavingsToolDefinition,
+  getPropertyDetails,
+  getPropertyDetailsToolDefinition,
+  saveFavoriteProperty,
+  saveFavoritePropertyToolDefinition,
+  getFavoriteProperties,
+  getFavoritePropertiesToolDefinition,
+} from '../tools/properties.js';
 
 /**
  * Check if any LLM API key is available
@@ -120,6 +132,12 @@ export function getToolDefinitions() {
     convertColorToolDefinition,
     saveFavoriteColorToolDefinition,
     getFavoritesToolDefinition,
+    // Property tools
+    searchPropertiesToolDefinition,
+    calculateSavingsToolDefinition,
+    getPropertyDetailsToolDefinition,
+    saveFavoritePropertyToolDefinition,
+    getFavoritePropertiesToolDefinition,
   ];
 
   // Only include recommendations tool if LLM is configured
@@ -246,6 +264,23 @@ export async function callTool(name: string, args: any, userId?: number): Promis
       case TOOL_NAMES.GET_FAVORITES:
         if (!userId) throw new Error('Authentication required');
         return await getFavorites(args, userId);
+
+      case TOOL_NAMES.SEARCH_PROPERTIES:
+        return await searchProperties(args, userId);
+
+      case TOOL_NAMES.CALCULATE_SAVINGS:
+        return await calculatePropertySavings(args, userId);
+
+      case TOOL_NAMES.GET_PROPERTY_DETAILS:
+        return await getPropertyDetails(args, userId);
+
+      case TOOL_NAMES.SAVE_FAVORITE_PROPERTY:
+        if (!userId) throw new Error('Authentication required');
+        return await saveFavoriteProperty(args, userId);
+
+      case TOOL_NAMES.GET_FAVORITE_PROPERTIES:
+        if (!userId) throw new Error('Authentication required');
+        return await getFavoriteProperties(args, userId);
 
       default:
         return {
