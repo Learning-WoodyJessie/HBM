@@ -20,33 +20,6 @@ import {
 // Removed LLM check - not needed for property-only app
 
 /**
- * Serialize unknown errors (including AggregateError/TaskGroup-style) for safe logging + UI
- */
-function serializeError(err: unknown) {
-  const e: any = err;
-  return {
-    name: e?.name || 'Error',
-    message: e?.message || String(err),
-    stack: e?.stack,
-    cause: e?.cause
-      ? {
-          name: e.cause?.name,
-          message: e.cause?.message,
-          stack: e.cause?.stack,
-        }
-      : undefined,
-    // Some runtimes attach nested errors on `errors` (e.g., AggregateError or TaskGroup)
-    innerErrors: Array.isArray(e?.errors)
-      ? e.errors.map((ie: any) => ({
-          name: ie?.name,
-          message: ie?.message,
-          stack: ie?.stack,
-        }))
-      : undefined,
-  };
-}
-
-/**
  * Get all tool definitions - Property tools only
  */
 export function getToolDefinitions() {

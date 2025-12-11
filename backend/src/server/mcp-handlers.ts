@@ -16,7 +16,6 @@ import {
   PROTOCOL_VERSION,
   WIDGET_CONFIG,
   OPENAI_WIDGET_META,
-  TOOL_NAMES,
 } from '../config/constants.js';
 import { PROPERTY_WIDGET_URL } from '../utils/config.js';
 import { getToolDefinitions, callTool } from './tool-registry.js';
@@ -65,12 +64,6 @@ async function handleListTools() {
   
   const tools = getToolDefinitions();
   console.log(`📋 Returning ${tools.length} tools`);
-  
-  // Log the get_movie_details tool specifically to verify _meta is included
-  const movieDetailsTool = tools.find((t) => t.name === TOOL_NAMES.GET_MOVIE_DETAILS);
-  if (movieDetailsTool) {
-    console.log('📋 get_movie_details tool definition:', JSON.stringify(movieDetailsTool, null, 2));
-  }
   
   return { tools };
 }

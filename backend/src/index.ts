@@ -9,7 +9,6 @@ import dotenv from 'dotenv';
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { testConnection, closePool } from './db/client.js';
 import { validateEnv, SERVER_INFO, ENDPOINTS, type Env } from './config/constants.js';
-import { MOVIE_POSTER_WIDGET_URL } from './utils/config.js';
 import { healthCheckHandler } from './routes/health.js';
 import { rootHandler } from './routes/root.js';
 import { registerMCPHandlers } from './server/mcp-handlers.js';
@@ -31,11 +30,6 @@ try {
 } catch (error) {
   console.error('❌ Failed to start: Invalid environment configuration');
   process.exit(1);
-}
-
-// Check widget configuration
-if (!MOVIE_POSTER_WIDGET_URL) {
-  console.warn('[Config] MOVIE_POSTER_WIDGET_URL not set. Apps SDK widget will not render for movie details.');
 }
 
 const PORT = env.PORT;
