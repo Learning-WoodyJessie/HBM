@@ -185,16 +185,21 @@ function PropertyCard({ property }: PropertyCardProps) {
           </span>
         </h3>
 
-        {/* Status and Type */}
+        {/* Status and Type - HomeBuyMe Brand Colors */}
         <div className="flex flex-wrap gap-2 mb-3">
           <span
             className={`px-2 py-1 rounded text-xs font-semibold ${
               property.status.toLowerCase() === 'available'
-                ? 'bg-green-100 text-green-800'
+                ? 'text-white'
                 : property.status.toLowerCase() === 'pending'
                 ? 'bg-yellow-100 text-yellow-800'
                 : 'bg-gray-100 text-gray-800'
             }`}
+            style={
+              property.status.toLowerCase() === 'available'
+                ? { backgroundColor: '#4CAF50' }
+                : undefined
+            }
           >
             {capitalize(property.status)}
           </span>
@@ -208,7 +213,7 @@ function PropertyCard({ property }: PropertyCardProps) {
           </span>
         </div>
 
-        {/* Pricing */}
+        {/* Pricing - HomeBuyMe Brand Colors */}
         <div className="space-y-2 mb-4">
           <div className="flex justify-between items-center">
             <span className="text-sm opacity-75">List Price:</span>
@@ -216,13 +221,13 @@ function PropertyCard({ property }: PropertyCardProps) {
               {formatPrice(property.property_price)}
             </span>
           </div>
-          <div className="flex justify-between items-center text-green-600 dark:text-green-400">
-            <span className="text-sm font-semibold">✨ Homebuyme Price:</span>
+          <div className="flex justify-between items-center" style={{ color: '#4CAF50' }}>
+            <span className="text-sm font-semibold">✨ HomeBuyMe Price:</span>
             <span className="font-bold">
               {formatPrice(property.property_price_with_hbm)}
             </span>
           </div>
-          <div className="flex justify-between items-center text-blue-600 dark:text-blue-400">
+          <div className="flex justify-between items-center" style={{ color: '#1A3A6D' }}>
             <span className="text-sm font-semibold">🎯 Savings:</span>
             <span className="font-bold">
               ≈{formatPrice(property.savings.priceDifference)}
@@ -240,7 +245,7 @@ function PropertyCard({ property }: PropertyCardProps) {
             }`}
           >
             <span className="text-sm font-bold">💡 Total Potential Savings:</span>
-            <span className="text-lg font-bold text-purple-600 dark:text-purple-400">
+            <span className="text-lg font-bold" style={{ color: '#F47C20' }}>
               ≈{formatPrice(property.savings.totalSavings)}
             </span>
           </div>
@@ -255,9 +260,9 @@ function PropertyCard({ property }: PropertyCardProps) {
           <strong>Life Nearby:</strong> {property.vibe}
         </div>
 
-        {/* Map Links */}
+        {/* Map Links - HomeBuyMe Brand Colors */}
         <div className="space-y-1 mb-4 text-sm">
-          <div className="font-semibold mb-2 flex items-center gap-2">
+          <div className="font-semibold mb-2 flex items-center gap-2" style={{ color: '#1A3A6D' }}>
             <FaMapMarkerAlt /> Explore Around:
           </div>
           <div className="grid grid-cols-2 gap-1 ml-5">
@@ -269,7 +274,8 @@ function PropertyCard({ property }: PropertyCardProps) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="hover:underline transition-colors"
+              style={{ color: '#F47C20' }}
             >
               🗺 Open Map
             </a>
@@ -281,7 +287,8 @@ function PropertyCard({ property }: PropertyCardProps) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="hover:underline transition-colors"
+              style={{ color: '#F47C20' }}
             >
               👁 Street View
             </a>
@@ -294,7 +301,8 @@ function PropertyCard({ property }: PropertyCardProps) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="hover:underline transition-colors"
+              style={{ color: '#F47C20' }}
             >
               🎓 Nearby Schools
             </a>
@@ -307,7 +315,8 @@ function PropertyCard({ property }: PropertyCardProps) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline"
+              className="hover:underline transition-colors"
+              style={{ color: '#F47C20' }}
             >
               🌳 Parks & Trails
             </a>
@@ -320,14 +329,15 @@ function PropertyCard({ property }: PropertyCardProps) {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 dark:text-blue-400 hover:underline col-span-2"
+              className="hover:underline transition-colors col-span-2"
+              style={{ color: '#F47C20' }}
             >
               🍽 Restaurants & Cafes
             </a>
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Action Buttons - HomeBuyMe Brand Colors */}
         <div className="space-y-2">
           {/* Start Offer Button - Primary CTA (only for supported states) */}
           {property.supportsOffers && (
@@ -335,7 +345,10 @@ function PropertyCard({ property }: PropertyCardProps) {
               href={`https://offer.homebuyme.com/partners/${property.partner_alias}/${property.partner_site_alias}?property_id=${property.id}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full py-3 px-4 text-white text-center rounded-lg font-bold transition-colors flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg"
+              className="block w-full py-3 px-4 text-white text-center rounded-lg font-bold transition-all duration-200 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
+              style={{
+                background: 'linear-gradient(135deg, #F47C20 0%, #FF8A3D 100%)',
+              }}
             >
               <FaDollarSign />
               🚀 Start Your Offer Now
@@ -348,11 +361,19 @@ function PropertyCard({ property }: PropertyCardProps) {
             href={property.partner_site_property_website}
             target="_blank"
             rel="noopener noreferrer"
-            className={`block w-full py-3 px-4 text-white text-center rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
-              property.supportsOffers
-                ? 'bg-blue-600 hover:bg-blue-700'
-                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg'
+            className={`block w-full py-3 px-4 text-white text-center rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2 ${
+              property.supportsOffers ? 'shadow' : 'shadow-lg'
             }`}
+            style={{
+              backgroundColor: property.supportsOffers ? '#1A3A6D' : undefined,
+              background: property.supportsOffers ? undefined : 'linear-gradient(135deg, #1A3A6D 0%, #2A5A9D 100%)',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = property.supportsOffers ? '#2A5A9D' : undefined;
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = property.supportsOffers ? '#1A3A6D' : undefined;
+            }}
           >
             <FaExternalLinkAlt />
             View Property Details
@@ -364,7 +385,7 @@ function PropertyCard({ property }: PropertyCardProps) {
               <p>
                 📍 <em>Offer creation not yet supported in {property.property_address.state}</em>
               </p>
-              <p className="text-purple-600 dark:text-purple-400 font-semibold">
+              <p style={{ color: '#F47C20' }} className="font-semibold">
                 Full service available in WA & CA
               </p>
             </div>
