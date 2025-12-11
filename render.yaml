@@ -23,6 +23,8 @@ services:
       # External API Keys (set these as secret in Render Dashboard)
       - key: TMDB_API_KEY
         sync: false
+      - key: HOMEBUYME_API_KEY
+        sync: false
       # LLM Provider Keys (at least one required)
       # Priority: OpenAI (GPT-5) > Anthropic (Claude Sonnet 4.5) > Gemini (2.5 Flash)
       - key: OPENAI_API_KEY
