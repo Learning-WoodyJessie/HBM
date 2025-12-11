@@ -174,3 +174,23 @@ export function getExpansionMessage(state: string): string {
 🏡 [Browse Featured Homes](https://homebuyme.com/browse-featured-homes/)`;
 }
 
+/**
+ * Construct the offer URL for a property
+ * Format: https://offer.homebuyme.com/partners/{partner_alias}/{partner_site_alias}?property_id={property_id}
+ */
+export function getOfferUrl(property: Property): string {
+  // First try to use the partner_site_property_website if it exists
+  if (property.partner_site_property_website) {
+    // Check if it already has the property_id parameter
+    if (property.partner_site_property_website.includes('property_id=')) {
+      return property.partner_site_property_website;
+    }
+    // Add property_id parameter if missing
+    const separator = property.partner_site_property_website.includes('?') ? '&' : '?';
+    return `${property.partner_site_property_website}${separator}property_id=${property.id}`;
+  }
+  
+  // Fallback: construct the offer URL from components
+  return `${HOMEBUYME_API_BASE}/partners/${property.partner_alias}/${property.partner_site_alias}?property_id=${property.id}`;
+}
+

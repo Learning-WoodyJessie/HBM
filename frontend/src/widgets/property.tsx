@@ -325,24 +325,36 @@ function PropertyCard({ property }: PropertyCardProps) {
           </div>
         </div>
 
-        {/* Action Button */}
-        <a
-          href={property.partner_site_property_website}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="block w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 text-white text-center rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-        >
-          <FaDollarSign />
-          View Details / Start Offer
-          <FaExternalLinkAlt className="text-sm" />
-        </a>
+        {/* Action Buttons */}
+        <div className="space-y-2">
+          {/* Start Offer Button - Primary CTA */}
+          <a
+            href={property.partner_site_property_website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`block w-full py-3 px-4 text-white text-center rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
+              property.supportsOffers
+                ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg'
+                : 'bg-blue-600 hover:bg-blue-700'
+            }`}
+          >
+            <FaDollarSign />
+            {property.supportsOffers ? '🚀 Start Your Offer Now' : 'View Property Details'}
+            <FaExternalLinkAlt className="text-sm" />
+          </a>
 
-        {/* Advisory Mode Notice */}
-        {!property.supportsOffers && (
-          <p className="text-xs text-center mt-2 opacity-75">
-            📍 <em>Advisory Mode — Offer creation not yet supported in {property.property_address.state}</em>
-          </p>
-        )}
+          {/* Advisory Mode Notice */}
+          {!property.supportsOffers && (
+            <div className="text-xs text-center opacity-75 space-y-1">
+              <p>
+                📍 <em>Offer creation not yet supported in {property.property_address.state}</em>
+              </p>
+              <p className="text-purple-600 dark:text-purple-400 font-semibold">
+                Full service available in WA & CA
+              </p>
+            </div>
+          )}
+        </div>
 
         {/* User Notes */}
         {property.notes && (

@@ -15,6 +15,7 @@ import {
   generateNeighborhoodVibe,
   supportsFullOffers,
   getExpansionMessage,
+  getOfferUrl,
   type Property,
 } from '../utils/homebuyme-api.js';
 
@@ -86,6 +87,7 @@ export async function searchProperties(input: unknown, _userId?: number) {
       success: true,
       properties: properties.map((p) => ({
         ...p,
+        partner_site_property_website: getOfferUrl(p), // Ensure offer URL is properly formatted
         savings: calculateSavings(p),
         vibe: generateNeighborhoodVibe(p),
         supportsOffers: supportsFullOffers(validatedInput.state),
@@ -186,12 +188,34 @@ export async function calculatePropertySavings(input: unknown, _userId?: number)
 
     const savings = calculateSavings(mockProperty);
 
-    const textContent = `💸 On a ${formatPrice(validatedInput.price)} home, you could save roughly ${formatPrice(savings.totalSavings)}.
+    const textContent = `HomeBuyMe helps you save up to 3% (or more!) when buying your next home — without sacrificing expert guidance or protection. Here's how it works:
 
-• ${formatPrice(savings.buyerAgentFee)} from avoiding 3% buyer-agent fees
-• ${formatPrice(savings.priceDifference)} from Homebuyme price advantage
+💡 **The HomeBuyMe Advantage**
 
-🎯 Want to see listings where these savings apply?`;
+🏠 **Skip the Buyer-Agent Fee (≈3%)**
+You buy directly with our smart offer tools — we handle all the legal and negotiation work behind the scenes.
+
+⚖️ **Attorney-Reviewed Offers**
+Every offer is reviewed by a real estate attorney before it's submitted — no guesswork, no risk.
+
+🚀 **Pay Only When You're Ready**
+No monthly fees. Just a flat one-time plan when you're ready to make an offer.
+
+💼 **Two Plan Options (WA & CA only)**
+• **Basic – $499**: Guided offer + attorney review + eSign
+• **Premium – $899**: Priority review, live consults, and counter-offer support
+
+🧮 **Example:**
+On a ${formatPrice(validatedInput.price)} home, you could save roughly ${formatPrice(savings.totalSavings)} —
+✨ ${formatPrice(savings.buyerAgentFee)} from skipping agent fees + ${formatPrice(savings.priceDifference)} from HomeBuyMe's price advantage.
+
+**Ready to explore listings and see your savings in action?**
+
+👉 [Browse Featured Homes](https://homebuyme.com/browse-featured-homes/)
+👉 [Learn How HomeBuyMe Works](https://homebuyme.com/about/)
+👉 [View Plans & Pricing](https://homebuyme.com/pricing/?utm_source_hbm=gpt-savings-info)
+
+Would you like me to show you live listings in Washington or California to see how much you could save?`;
 
     const structuredContent = {
       success: true,
@@ -201,6 +225,10 @@ export async function calculatePropertySavings(input: unknown, _userId?: number)
         total: formatPrice(savings.totalSavings),
         agentFee: formatPrice(savings.buyerAgentFee),
         priceDifference: formatPrice(savings.priceDifference),
+      },
+      plans: {
+        basic: { price: 499, description: 'Guided offer + attorney review + eSign' },
+        premium: { price: 899, description: 'Priority review, live consults, and counter-offer support' },
       },
     };
 
@@ -226,13 +254,13 @@ export async function calculatePropertySavings(input: unknown, _userId?: number)
 
 export const calculateSavingsToolDefinition = {
   name: 'calculate_savings',
-  description: 'Calculate potential savings with Homebuyme on a home purchase. Shows savings from avoiding buyer-agent fees and Homebuyme price advantage.',
+  description: 'Calculate potential savings with HomeBuyMe on a home purchase. Provides comprehensive explanation of how HomeBuyMe works, including savings from avoiding buyer-agent fees (≈3%), HomeBuyMe price advantage, plan options (Basic $499, Premium $899), and links to browse homes and learn more. Use this when users ask about savings, costs, fees, or how HomeBuyMe works.',
   inputSchema: {
     type: 'object',
     properties: {
       price: {
         type: 'number',
-        description: 'Home price to calculate savings for',
+        description: 'Home price to calculate savings for (e.g., 900000 for $900k home)',
       },
     },
     required: ['price'],
@@ -297,6 +325,7 @@ ${vibe}
       properties: [
         {
           ...property,
+          partner_site_property_website: getOfferUrl(property), // Ensure offer URL is properly formatted
           savings,
           vibe,
           supportsOffers,
