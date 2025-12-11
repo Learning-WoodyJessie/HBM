@@ -36,6 +36,8 @@ interface Property {
   property_model?: string;
   status: string;
   property_image?: string;
+  partner_alias: string;
+  partner_site_alias: string;
   partner_site_property_website: string;
   savings: Savings;
   vibe: string;
@@ -327,20 +329,33 @@ function PropertyCard({ property }: PropertyCardProps) {
 
         {/* Action Buttons */}
         <div className="space-y-2">
-          {/* Start Offer Button - Primary CTA */}
+          {/* Start Offer Button - Primary CTA (only for supported states) */}
+          {property.supportsOffers && (
+            <a
+              href={`https://offer.homebuyme.com/partners/${property.partner_alias}/${property.partner_site_alias}?property_id=${property.id}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full py-3 px-4 text-white text-center rounded-lg font-bold transition-colors flex items-center justify-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg"
+            >
+              <FaDollarSign />
+              🚀 Start Your Offer Now
+              <FaExternalLinkAlt className="text-sm" />
+            </a>
+          )}
+
+          {/* View Details Button - Secondary Action */}
           <a
             href={property.partner_site_property_website}
             target="_blank"
             rel="noopener noreferrer"
-            className={`block w-full py-3 px-4 text-white text-center rounded-lg font-bold transition-colors flex items-center justify-center gap-2 ${
+            className={`block w-full py-3 px-4 text-white text-center rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 ${
               property.supportsOffers
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-lg'
-                : 'bg-blue-600 hover:bg-blue-700'
+                ? 'bg-blue-600 hover:bg-blue-700'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg'
             }`}
           >
-            <FaDollarSign />
-            {property.supportsOffers ? '🚀 Start Your Offer Now' : 'View Property Details'}
-            <FaExternalLinkAlt className="text-sm" />
+            <FaExternalLinkAlt />
+            View Property Details
           </a>
 
           {/* Advisory Mode Notice */}
