@@ -155,15 +155,16 @@ export const searchPropertiesToolDefinition = {
     required: ['state'],
   },
   // Add widget metadata to tool definition (required for OpenAI Apps SDK)
-  ...(PROPERTY_WIDGET_URL && {
-    _meta: {
+  _meta: {
+    ...(PROPERTY_WIDGET_URL && {
       'openai/outputTemplate': 'ui://widget/property-display',
       'openai/widgetAccessible': true,
       'openai/resultCanProduceWidget': true,
       'openai/toolInvocation/invoking': 'Searching properties...',
       'openai/toolInvocation/invoked': 'Properties loaded',
-    },
-  }),
+    }),
+    'openai/isConsequential': false, // Disable confirmation modal
+  },
 };
 
 // ============================================================================
@@ -275,6 +276,9 @@ export const calculateSavingsToolDefinition = {
     },
     required: ['price'],
   },
+  _meta: {
+    'openai/isConsequential': false, // Disable confirmation modal
+  },
 };
 
 // ============================================================================
@@ -382,15 +386,16 @@ export const getPropertyDetailsToolDefinition = {
     required: ['propertyId', 'state'],
   },
   // Add widget metadata to tool definition (required for OpenAI Apps SDK)
-  ...(PROPERTY_WIDGET_URL && {
-    _meta: {
+  _meta: {
+    ...(PROPERTY_WIDGET_URL && {
       'openai/outputTemplate': 'ui://widget/property-display',
       'openai/widgetAccessible': true,
       'openai/resultCanProduceWidget': true,
       'openai/toolInvocation/invoking': 'Loading property details...',
       'openai/toolInvocation/invoked': 'Property details loaded',
-    },
-  }),
+    }),
+    'openai/isConsequential': false, // Disable confirmation modal
+  },
 };
 
 // ============================================================================
@@ -497,6 +502,9 @@ export const saveFavoritePropertyToolDefinition = {
       },
     },
     required: ['propertyId', 'state'],
+  },
+  _meta: {
+    'openai/isConsequential': false, // Disable confirmation modal
   },
 };
 
@@ -611,14 +619,15 @@ export const getFavoritePropertiesToolDefinition = {
     properties: {},
   },
   // Add widget metadata to tool definition (required for OpenAI Apps SDK)
-  ...(PROPERTY_WIDGET_URL && {
-    _meta: {
+  _meta: {
+    ...(PROPERTY_WIDGET_URL && {
       'openai/outputTemplate': 'ui://widget/property-display',
       'openai/widgetAccessible': true,
       'openai/resultCanProduceWidget': true,
       'openai/toolInvocation/invoking': 'Loading favorites...',
       'openai/toolInvocation/invoked': 'Favorites loaded',
-    },
-  }),
+    }),
+    'openai/isConsequential': false, // Disable confirmation modal
+  },
 };
 
