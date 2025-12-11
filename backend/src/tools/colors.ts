@@ -28,7 +28,7 @@ export const GetColorInfoSchema = z.object({
 
 export type GetColorInfoInput = z.infer<typeof GetColorInfoSchema>;
 
-export async function getColorInfo(input: unknown, userId?: number) {
+export async function getColorInfo(input: unknown, _userId?: number) {
   try {
     const validatedInput = GetColorInfoSchema.parse(input);
     const colorInfo = parseColor(validatedInput.color);
@@ -115,7 +115,7 @@ export const GeneratePaletteSchema = z.object({
 
 export type GeneratePaletteInput = z.infer<typeof GeneratePaletteSchema>;
 
-export async function generatePalette(input: unknown, userId?: number) {
+export async function generatePalette(input: unknown, _userId?: number) {
   try {
     const validatedInput = GeneratePaletteSchema.parse(input);
     const baseColor = parseColor(validatedInput.baseColor);
@@ -225,7 +225,7 @@ export const RandomColorsSchema = z.object({
 
 export type RandomColorsInput = z.infer<typeof RandomColorsSchema>;
 
-export async function randomColors(input: unknown, userId?: number) {
+export async function randomColors(input: unknown, _userId?: number) {
   try {
     const validatedInput = RandomColorsSchema.parse(input);
     const colors = Array.from({ length: validatedInput.count }, () =>
@@ -308,7 +308,7 @@ export const ConvertColorSchema = z.object({
 
 export type ConvertColorInput = z.infer<typeof ConvertColorSchema>;
 
-export async function convertColor(input: unknown, userId?: number) {
+export async function convertColor(input: unknown, _userId?: number) {
   try {
     const validatedInput = ConvertColorSchema.parse(input);
     const colorInfo = parseColor(validatedInput.color);
@@ -469,7 +469,7 @@ export const GetFavoritesSchema = z.object({});
 
 export type GetFavoritesInput = z.infer<typeof GetFavoritesSchema>;
 
-export async function getFavorites(input: unknown, userId?: number) {
+export async function getFavorites(_input: unknown, userId?: number) {
   try {
     if (!userId) {
       throw new Error('User authentication required to get favorite colors');
