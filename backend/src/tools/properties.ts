@@ -182,14 +182,6 @@ export async function calculatePropertySavings(input: unknown, _userId?: number)
     
     const listPrice = validatedInput.price;
     const buyerAgentFee = listPrice * 0.03; // 3% buyer's agent fee
-    
-    // Plan costs
-    const basicPlanCost = 499;
-    const premiumPlanCost = 899;
-    
-    // Net savings after plan fees
-    const netSavingsBasic = buyerAgentFee - basicPlanCost;
-    const netSavingsPremium = buyerAgentFee - premiumPlanCost;
 
     const textContent = `For a ${formatPrice(listPrice)} home, HomeBuyMe's estimate looks like this:
 
@@ -207,11 +199,6 @@ export async function calculatePropertySavings(input: unknown, _userId?: number)
 
 • **Basic: $499** – Guided offer + attorney review + eSign
 • **Premium: $899** – Priority review, live consults, and counter-offer support
-
-**So after fees, your net savings are roughly:**
-
-• **Basic:** About ${formatPrice(netSavingsBasic)}
-• **Premium:** About ${formatPrice(netSavingsPremium)}
 
 ---
 
@@ -242,20 +229,16 @@ If you want, I can run the same math for a different price (e.g., $800K or $1.2M
       buyerAgentFee,
       plans: {
         basic: { 
-          price: basicPlanCost, 
+          price: 499, 
           description: 'Guided offer + attorney review + eSign',
-          netSavings: netSavingsBasic,
         },
         premium: { 
-          price: premiumPlanCost, 
+          price: 899, 
           description: 'Priority review, live consults, and counter-offer support',
-          netSavings: netSavingsPremium,
         },
       },
       formattedSavings: {
         buyerAgentFee: formatPrice(buyerAgentFee),
-        netSavingsBasic: formatPrice(netSavingsBasic),
-        netSavingsPremium: formatPrice(netSavingsPremium),
       },
     };
 
