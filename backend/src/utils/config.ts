@@ -100,6 +100,11 @@ export const MOVIE_POSTER_WIDGET_URL = normalizedPosterUrl;
 export const MOVIE_LIST_WIDGET_URL = normalizedListUrl;
 export const COLOR_WIDGET_URL = normalizedColorUrl;
 
+console.log('[Config] Widget URLs resolved:');
+console.log('[Config]   MOVIE_POSTER_WIDGET_URL:', MOVIE_POSTER_WIDGET_URL);
+console.log('[Config]   MOVIE_LIST_WIDGET_URL:', MOVIE_LIST_WIDGET_URL);
+console.log('[Config]   COLOR_WIDGET_URL:', COLOR_WIDGET_URL);
+
 /**
  * Utility function to resolve Render.com host URLs
  * Can be used for other services/URLs
